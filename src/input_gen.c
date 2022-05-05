@@ -1,36 +1,34 @@
 #include "input_gen.h"
-#include "sorting.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-// static void swap(int a[], int i, int  i2);
+static void swap(char *a, int i, int  j);
 
-void orderedArray(int n, int a[])
+// void orderedArray(int n, char *a)
+// {
+//     for (int i = 0; i < n; i++)
+//     {
+//         a[i] = alphabet[i];
+//     }
+// }
+
+// void revOrderedArray(int n, char *a)
+// {
+//     for (int i = 0; i < n; i++)
+//     {
+//         a[i] = n - i;
+//     }
+// }
+
+void randomOrderedInput(int n, char *a, char *alphabet)
 {
     for (int i = 0; i < n; i++)
     {
-        a[i] = i + 1;
+        a[i] = alphabet[rand() % 30];
     }
 }
 
-void revOrderedArray(int n, int a[])
-{
-    for (int i = 0; i < n; i++)
-    {
-        a[i] = n - i;
-    }
-}
-
-void randomOrderedInput(int n, int a[])
-{
-    for (int i = 0; i < n; i++)
-    {
-        int change = rand() % n + 1;
-        a[i] = i + change;
-    }
-}
-
-void random4OrderedInput(int n, int a[])
+void random4OrderedInput(int n, char *a)
 {
     for (int i = 0; i < n; i++)
     {    
@@ -51,9 +49,9 @@ void printArray(int *arr, int n)
     printf("\n");
 }
 
-// static void swap(int a[], int i,int  i2)
-// {
-//     int temp = a[i];
-//     a[i] = a[i2];
-//     a[i2] = temp;
-// }
+static void swap(char *a, int i,int  j)
+{
+    int temp = a[i];
+    a[i] = a[j];
+    a[j] = temp;
+}

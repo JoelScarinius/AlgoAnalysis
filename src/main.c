@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "sorting.h"
 #include "input_gen.h"
 #include "fileHandling.h"
+#include "shiftTable.h"
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,7 +10,11 @@
 #define ARRAY_SIZE 32768
 
 static void displayMainMenu();
-static void simSortAlgo(char algorithm[]);
+//Implements Horspool’s algorithm for string matching
+//Input: Pattern P[0..m − 1] and text T [0..n − 1]
+//Output: The index of the left end of the first matching substring
+// or −1 if there are no matches
+static void horsepools(char algorithm[]);
 
 int main(int argc, char const *argv[])
 {
@@ -24,10 +28,11 @@ int main(int argc, char const *argv[])
         scanf("%d", &option);
         switch (option)
         {
-        case 1: simSortAlgo("Selection sort"); break;
-        case 2: simSortAlgo("Insertion sort"); break;
-        case 3: simSortAlgo("Qucik sort"); break;
-        case 4: exit(-1); break;
+        case 1: horsepools("Ordered(A-Z)"); break;
+        case 2: horsepools("Reveresed Ordered(Z-A)"); break;
+        case 3: horsepools("Random Ordered"); break;
+        case 4: horsepools("Almost Ordered"); break;
+        case 5: exit(-1); break;
         default: puts("Invalid input, please try again!"); break;
         }
     }
@@ -36,49 +41,51 @@ int main(int argc, char const *argv[])
 
 static void displayMainMenu()
 {
-    puts("\nPlease choose an algorithm\n"
-         "1. SelectionSort\n"
-         "2. InsertionSort\n"
-         "3. QuickSort\n"
-         "4. Quit");
+    puts("\nPlease choose input type\n"
+         "1. Ordered(A-Z)\n"
+         "2. Reveresed Ordered(Z-A)\n"
+         "3. Random Ordered\n"
+         "4. Almost Ordered\n"
+         "5. Quit");
     printf("Your choice? : ");
 }
 
-static void simSortAlgo(char algorithm[])
+static void horsepools(char algorithm[])
 {
-    unsigned int n = INPUT_SIZE, l = 0, r = n-1, count = 30, a[ARRAY_SIZE];
+    unsigned int n = INPUT_SIZE, l = 0, r = n-1, count = 30;
     size_t totOp = 0, avrOp = 0, op = 0;
 
-    // printHeaderToFile(algorithm, "Ordered");
-    // while (n <= ARRAY_SIZE)
-    // {
-    //     orderedArray(n, a); // Ordnad input
-    //     // if (n == ARRAY_SIZE)
-    //     // {
-    //     //     printf("\n");
-    //     //     printArray(a, n);
-    //     // }
-    //     if (strcmp(algorithm, "Selection sort") == 0) selectionSort(n, a, &op);// selectionSort
-    //     else if (strcmp(algorithm, "Insertion sort") == 0) insertionSort(n, a, &op);// insertionSort
-    //     else quickSort(a, l, r, &op);// quickSort
-    //     if (n == ARRAY_SIZE)
-    //     // {
-    //     //     printf("\n");
-    //     //     printArray(a, n);
-    //     // }
-    //     printResultsToFile(n, &op);
-    //     n *= 2;
-    //     r = n-1;
-    //     op = 0;
-    // }
-    printHeaderToFile(algorithm, "Reversed Ordered");
-    // n = r = INPUT_SIZE;
+    char a[ARRAY_SIZE], alphabet[] = {'A', 'B', 'C', 'D', 
+                                      'E', 'F', 'G', 'H',
+                                      'I', 'J', 'K', 'L', 
+                                      'M', 'N', 'O', 'P', 
+                                      'Q', 'R', 'S', 'T', 
+                                      'U', 'V', 'X', 'Y', 
+                                      'Z', '_', '\0'};
+    char *patterns[] = ("JIM_SAW_ME_IN_A_BARBERSHOP_", "BESS_KNEW_ABOUT_BAOBABS", 
+                       "TTATAGATCTCGTATTCTTTTATAGATCTCCTATTCTT", "TCCTATTCTT",
+                       "SORTING ALGORITHM CAN USE BRUTE FORCE METHOD");
+    char *words[] = ("HELLO_", "DOG_", "CAT_", "RANDOM_",
+                    "WEIRD_", "ENGLISH_", "POLICE_", "BIKE_",
+                    "XENON_LIGHTS_", "JIM_", "SAW_", "ME_",
+                    "IN_", "BARBERSHOP_", "A_", "YELLOW_",
+                    "SUBMARINE_", "FEAR_", "FIERCENESS_", "KICK_",
+                    "QUICKLY_", "RUN_", "SPORT_", "WITH_", "EVER_", "ZOO_");
+
+    printHeaderToFile(algorithm, "Ordered");
     while (n <= ARRAY_SIZE)
     {
-        revOrderedArray(n, a); // Omvänd ordnad input 
-        if (strcmp(algorithm, "Selection sort") == 0) selectionSort(n, a, &op);// selectionSort
-        else if (strcmp(algorithm, "Insertion sort") == 0) insertionSort(n, a, &op);// insertionSort
-        else quickSort(a, l, r, &op);// quickSort
+        
+        printResultsToFile(n, &op);
+        n *= 2;
+        r = n-1;
+        op = 0;
+    }
+    printHeaderToFile(algorithm, "Reversed Ordered");
+    n = r = INPUT_SIZE;
+    while (n <= ARRAY_SIZE)
+    {
+        
         printResultsToFile(n, &op);
         n *= 2;
         r = n-1;
@@ -90,10 +97,8 @@ static void simSortAlgo(char algorithm[])
     {
         for (size_t i = 1; i <= count; i++)
         {
-            randomOrderedInput(n, a);
-            if (strcmp(algorithm, "Selection sort") == 0) selectionSort(n, a, &op);// selectionSort
-            else if (strcmp(algorithm, "Insertion sort") == 0) insertionSort(n, a, &op);// insertionSort
-            else quickSort(a, l, r, &op);// quickSort
+            // randomOrderedInput(n, a);
+            
             totOp += op;
             op = 0;
         }
@@ -110,10 +115,8 @@ static void simSortAlgo(char algorithm[])
     {
         for (size_t i = 1; i <= count; i++)
         {
-            random4OrderedInput(n, a);
-            if (strcmp(algorithm, "Selection sort") == 0) selectionSort(n, a, &op);// selectionSort
-            else if (strcmp(algorithm, "Insertion sort") == 0) insertionSort(n, a, &op);// insertionSort
-            else quickSort(a, l, r, &op);// quickSort
+            // random4OrderedInput(n, a);
+            
             totOp += op;
             op = 0;
         }
@@ -125,3 +128,33 @@ static void simSortAlgo(char algorithm[])
         op = 0;
     }
 }
+
+int horsepoolsMatching(char *pattern, char *text)
+{
+    int inputLen;
+    int table = shiftTable(pattern, inputLen);
+    int m = inputLen, i = m-1, n = 0;
+    while (i <= n-1)
+    {
+        int k = 0;
+        while (k <= m-1 && pattern[m-1-k] == text[i-k]) k++;
+        if (k == m) return i-m+1;
+        else i += table[(int)text[i]];
+    }
+    
+    
+    
+
+}
+// ALGORITHM HorspoolMatching(P[0..m − 1], T [0..n − 1])
+
+// ShiftTable(P[0..m − 1]) //generate Table of shifts
+// i ← m − 1 //position of the pattern’s right end
+// while i ≤ n − 1 do
+// k ← 0 //number of matched characters
+// while k ≤ m − 1 and P[m − 1 − k] = T [i − k] do
+// k ← k + 1
+// if k = m
+// return i − m + 1
+// else i ← i + Table[T [i]]
+// return −1
