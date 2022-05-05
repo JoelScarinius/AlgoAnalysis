@@ -1,0 +1,115 @@
+Algorithm: Selection sort
+Input: Ordered
+n number of op
+----------------
+256 32640
+512 130816
+1024 523776
+2048 2096128
+4096 8386560
+8192 33550336
+16384 134209536
+32768 536854528
+
+Algorithm: Selection sort
+Input: Reversed Ordered
+n number of op
+----------------
+256 32640
+512 130816
+1024 523776
+2048 2096128
+4096 8386560
+8192 33550336
+16384 134209536
+32768 536854528
+
+Algorithm: Selection sort
+Input: Random Ordered
+n number of op
+----------------
+256 32640
+512 130816
+1024 523776
+2048 2096128
+4096 8386560
+8192 33550336
+16384 134209536
+32768 536854528
+
+Algorithm: Selection sort
+Input: Almost Ordered
+n number of op
+----------------
+256 32640
+512 130816
+1024 523776
+2048 2096128
+4096 8386560
+8192 33550336
+16384 134209536
+32768 536854528
+
+Algorithm: Insertion sort
+Input: Ordered
+n number of op
+----------------
+256 255
+512 511
+1024 1023
+2048 2047
+4096 4095
+8192 8191
+16384 16383
+32768 32767
+
+Algorithm: Insertion sort
+Input: Reversed Ordered
+n number of op
+----------------
+256 32895
+512 131327
+1024 524799
+2048 2098175
+4096 8390655
+8192 33558527
+16384 134225919
+32768 536887295
+
+Algorithm: Insertion sort
+Input: Random Ordered
+n number of op
+----------------
+256 8266
+512 33516
+1024 131471
+2048 524936
+4096 2100725
+8192 8391567
+16384 33533338
+32768 134324446
+
+Algorithm: Insertion sort
+Input: Almost Ordered
+n number of op
+----------------
+256 255
+512 511
+1024 1023
+2048 2047
+4096 4095
+8192 8191
+16384 16383
+32768 32767
+
+Algorithm: Qucik sort
+Input: Reversed Ordered
+n number of op
+----------------
+256 33022
+512 131582
+1024 525310
+2048 2099198
+4096 8392702
+8192 33562622
+16384 134234110
