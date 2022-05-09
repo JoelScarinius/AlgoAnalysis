@@ -7,6 +7,6 @@
 //Input: Pattern P[0..m − 1] and an alphabet of possible characters
 //Output: Table[0..size − 1] indexed by the alphabet’s characters and
 // filled with shift sizes computed by formula (7.1)
-char *shiftTable(char *pattern, int inputLen);
+int *shiftTable(char *pattern, char *alphabet, int m, int n);
 
 #endif

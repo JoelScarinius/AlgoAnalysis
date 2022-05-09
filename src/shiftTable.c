@@ -12,10 +12,15 @@
 // for j ← 0 to m − 2 do Table[P[j ]]← m − 1 − j
 // return Table
 
-char *shiftTable(char *pattern, char *alphabet, int inputLen)
+int *shiftTable(char *pattern, char *alphabet, int m, int n)
 {
-    int m = strlen(pattern), table[28];
-    for (unsigned int i = 0; i < 28; i++) table[i] = m;
-    for (unsigned int j = 0; j < m-2; j++) table[(int)pattern[j]] = m-1-j;
+    int *table = (int *)malloc(sizeof(int)*28);
+    for (unsigned int i = 0; i <= 128; i++) 
+        table[i] = m;
+    for (unsigned int j = 0; j <= m-2; j++) 
+    {    
+        table[(int)pattern[j]] = m-1-j;
+        printf("%d\n", table[(int)pattern[j]]);
+    }
     return table;
 }
