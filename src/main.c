@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "input_gen.h"
 #include "fileHandling.h"
-#include "shiftTable.h"
+#include "stringMatching.h"
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,12 +10,7 @@
 #define ARRAY_SIZE 32768
 
 static void displayMainMenu();
-static int horspoolsMatching(char *pattern, char *text, char *ascii);
-//Implements Horspool’s algorithm for string matching
-//Input: Pattern P[0..m − 1] and text T [0..n − 1]
-//Output: The index of the left end of the first matching substring
-// or −1 if there are no matches
-static void horsepools(char algorithm[]);
+// static void horsepools(char algorithm[]);
 
 int main(int argc, char const *argv[])
 {
@@ -26,9 +21,9 @@ int main(int argc, char const *argv[])
     // scanf("%s", text);
     // puts("\nPlease enter a pattern to search for in the text : ");
     // scanf("%s", pattern);
-    char *ascii = (char *)malloc(sizeof(char)*129);
-    for (unsigned int i = 0; i < 128; i++) ascii[i] = i;
-    ascii[129] = '\0'; // Osäker på om man behöver göra detta..
+    char *ascii = (char *)malloc(sizeof(char)*ASCII);
+    for (unsigned int i = 0; i < ASCII; i++) 
+        ascii[i] = i;
     int lMatchingIdx = horspoolsMatching("-.*", "BBCCAABBA-.*CBBCAACBABC", ascii);
     printf("\n%d\t%d\t%d", lMatchingIdx, lMatchingIdx+1, lMatchingIdx+2);
     // for (unsigned int i = 0; i < count; i++)
@@ -143,29 +138,3 @@ static void displayMainMenu()
 //         op = 0;
 //     }
 // }
-
-static int horspoolsMatching(char *pattern, char *text, char *ascii)
-{
-    int m = strlen(pattern), i = m-1, n = strlen(text);
-    int *table = shiftTable(pattern, ascii, m, n);
-    while (i <= n-1)
-    {
-        int k = 0;
-        while (k <= m-1 && pattern[m-1-k] == text[i-k]) k++;
-        if (k == m) return i-m+1;
-        else i += table[(int)text[i]];
-    }
-    return -1;
-}
-// ALGORITHM HorspoolMatching(P[0..m − 1], T [0..n − 1])
-
-// ShiftTable(P[0..m − 1]) //generate Table of shifts
-// i ← m − 1 //position of the pattern’s right end
-// while i ≤ n − 1 do
-// k ← 0 //number of matched characters
-// while k ≤ m − 1 and P[m − 1 − k] = T [i − k] do
-// k ← k + 1
-// if k = m
-// return i − m + 1
-// else i ← i + Table[T [i]]
-// return −1
