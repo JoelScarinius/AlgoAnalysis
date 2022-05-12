@@ -3,8 +3,8 @@
 
 #include <stdlib.h>
 
-void printHeaderToFile(char algorithm[], char inputType[]);
+void printHeaderToFile(char *algorithm);
 
-void printResultsToFile(int n, size_t *op);
+void printResultsToFile(char *pattern, size_t *op);
 
 #endif

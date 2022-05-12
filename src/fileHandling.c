@@ -2,23 +2,22 @@
 #include <stdlib.h>
 #include "fileHandling.h"
 
-void printHeaderToFile(char algorithm[], char inputType[])
+void printHeaderToFile(char *algo)
 {
     FILE *fPtr = fopen("Results.txt", "a");
 
     fprintf(fPtr, "\n");
-    fprintf(fPtr, "%s %s\n", "Algorithm:", algorithm);
-    fprintf(fPtr, "%s %s\n", "Input:", inputType);
+    fprintf(fPtr, "%s %s\n", "Algorithm:", algo);
     fprintf(fPtr, "%s\n%s\n", "n number of op", "----------------");
 
     fclose(fPtr); // When done reading the file the connection to the file is closed.
 }
 
-void printResultsToFile(int n, size_t *op)
+void printResultsToFile(char *pattern, size_t *op)
 {
     FILE *fPtr = fopen("Results.txt", "a");
 
-    fprintf(fPtr, "%u %u\n", n, *op);
+    fprintf(fPtr, "%s %u\n", pattern, *op);
 
     fclose(fPtr); // When done reading the file the connection to the file is closed.
 }
