@@ -18,7 +18,7 @@ int bruteForceMatching(char *pattern, char *text, size_t *op);
 // a variable (op) that counts number of critical operations preformed.
 // Output: The index of the left end of the first matching substring
 // or −1 if there are no matches
-int horspoolsMatching(char *pattern, char *text, char *ascii, size_t *op);
+// int horspoolsMatching(char *pattern, char *text, char *ascii, size_t *op);
 
 // Implements Horspool’s algorithm for string matching
 // Input: Pattern P[0..m − 1], text T [0..n − 1]
@@ -26,15 +26,6 @@ int horspoolsMatching(char *pattern, char *text, char *ascii, size_t *op);
 // a variable (op) that counts number of critical operations preformed.
 // Output: The index of the left end of the first matching substring
 // or −1 if there are no matches
-int boyerMooreMatching(char *pattern, char *text, char *ascii, size_t *op);
-
-// Fills the shift table used by Horspool’s and Boyer-Moore algorithms
-// Input: Pattern P[0..m − 1] and an alphabet of possible characters
-// Output: Table[0..size − 1] indexed by the alphabet’s characters and
-// filled with shift sizes computed by formula (7.1)
-char *shiftTable(char *pattern, char *alphabet, int m, int n);
-
-char *suffix(char *pattern, char *ascii, int m, int n);
-
+int bMHorspoolMatching(char *pattern, char *text, char *ascii, unsigned int option, size_t *op);
 
 #endif

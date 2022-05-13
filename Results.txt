@@ -1,65 +1,55 @@
 
 Algorithm: Brute-Force matching
-n number of op
+pattern number of op
 ----------------
-I 11
-
-Algorithm: Brute-Force matching
-n number of op
-----------------
-I 11
-
-Algorithm: Brute-Force matching
-n number of op
-----------------
-I 11
-
-Algorithm: Brute-Force matching
-n number of op
-----------------
-I 11
-
-Algorithm: Brute-Force matching
-n number of op
-----------------
-I 11
-
-Algorithm: Brute-Force matching
-n number of op
-----------------
-I 11
-
-Algorithm: Brute-Force matching
-n number of op
-----------------
-I 11
+BAOBAB 17
 
 Algorithm: Horspool matching
-n number of op
+pattern number of op
 ----------------
-I 11
+BAOBAB 12
 
-Algorithm: Brute-Force matching
-n number of op
+Algorithm: Boyer-Moore matching
+pattern number of op
 ----------------
-I 11
-
-Algorithm: Horspool matching
-n number of op
-----------------
-I 11
+BAOBAB 13
 
 Algorithm: Horspool matching
-n number of op
+pattern number of op
 ----------------
-do 14
+BAOBAB 12
+
+Algorithm: Boyer-Moore matching
+pattern number of op
+----------------
+BAOBAB 13
 
 Algorithm: Horspool matching
-n number of op
+pattern number of op
 ----------------
-? 38
+BARBER 13
+
+Algorithm: Boyer-Moore matching
+pattern number of op
+----------------
+BARBER 13
+
+Algorithm: Boyer-Moore matching
+pattern number of op
+----------------
+BAOBAB 13
 
 Algorithm: Horspool matching
-n number of op
+pattern number of op
 ----------------
-2 38
+001 32
+
+Algorithm: Horspool matching
+pattern number of op
+----------------
+001 32
+
+Algorithm: Horspool matching
+pattern number of op
+----------------
+00111 21

@@ -8,7 +8,7 @@ void printHeaderToFile(char *algo)
 
     fprintf(fPtr, "\n");
     fprintf(fPtr, "%s %s\n", "Algorithm:", algo);
-    fprintf(fPtr, "%s\n%s\n", "n number of op", "----------------");
+    fprintf(fPtr, "%s\n%s\n", "pattern number of op", "----------------");
 
     fclose(fPtr); // When done reading the file the connection to the file is closed.
 }

@@ -29,17 +29,17 @@ int main(int argc, char const *argv[])
         {
         case 1: 
                 lMatchingIdx = bruteForceMatching(pattern, text, &op); 
-                printf("%d\n", lMatchingIdx); 
+                printf("\n%d", lMatchingIdx); 
                 printHeaderToFile("Brute-Force matching"); 
                 break;
         case 2: 
-                lMatchingIdx = horspoolsMatching(pattern, text, ascii, &op); 
-                printf("%d\n", lMatchingIdx); 
+                lMatchingIdx = bMHorspoolMatching(pattern, text, ascii, option, &op); 
+                printf("\n%d", lMatchingIdx); 
                 printHeaderToFile("Horspool matching"); 
                 break;
         case 3: 
-                lMatchingIdx = boyerMooreMatching(pattern, text, ascii, &op); 
-                printf("%d\n", lMatchingIdx); 
+                lMatchingIdx = bMHorspoolMatching(pattern, text, ascii, option, &op); 
+                printf("\n%d", lMatchingIdx); 
                 printHeaderToFile("Boyer-Moore matching"); 
                 break;
         case 4: exit(-1); break;
@@ -76,7 +76,4 @@ static void userInput(unsigned int *option, char *text, char *pattern)
     puts("Please enter a pattern in the text to search for here:");
     fgets(pattern, TEXTLEN, stdin);
     pattern[strlen(pattern)-1] = '\0';
-    // if (*option == 1) return "Brute-force matching";
-    // else if (*option == 2) return "Horspool matching";
-    // else if (*option == 3) return "Boyer-Moore matching";
 }
