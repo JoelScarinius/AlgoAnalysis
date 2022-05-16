@@ -4,16 +4,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define TEXTLEN 5000
-#define ALGOLEN 20
-
 static void displayMainMenu();
-static void userInput(unsigned int *option, char *text, char *pattern);
+static void getTextAndPattern(char *text, char *pattern);
 
 int main(int argc, char const *argv[])
 {
-    size_t op = 0;
-    unsigned int option = 0;
+    size_t op = 0, totOp = 0, *avrOp = 0;;
+    unsigned int option = 0, counter = 0;
     int lMatchingIdx;
 
     while (option != 4)
@@ -23,30 +20,42 @@ int main(int argc, char const *argv[])
         char *pattern = (char *)malloc(sizeof(char)*TEXTLEN);
 
         displayMainMenu(); // Prints main menu.
-        userInput(&option, text, pattern);
+        fflush(stdin);
+        scanf("%u", &option);
+        if (option == 1 || option == 2 || option == 3) getTextAndPattern(text, pattern);
         
         switch (option)
         {
         case 1: 
+                printHeaderToFile("Brute-Force matching"); 
                 lMatchingIdx = bruteForceMatching(pattern, text, &op); 
                 printf("\n%d", lMatchingIdx); 
-                printHeaderToFile("Brute-Force matching"); 
                 break;
         case 2: 
+                printHeaderToFile("Horspool matching"); 
                 lMatchingIdx = bMHorspoolMatching(pattern, text, ascii, option, &op); 
                 printf("\n%d", lMatchingIdx); 
-                printHeaderToFile("Horspool matching"); 
                 break;
         case 3: 
+                printHeaderToFile("Boyer-Moore matching"); 
                 lMatchingIdx = bMHorspoolMatching(pattern, text, ascii, option, &op); 
                 printf("\n%d", lMatchingIdx); 
-                printHeaderToFile("Boyer-Moore matching"); 
                 break;
         case 4: exit(-1); break;
         default: puts("Invalid input, please try again!"); break;
         }
         if (option == 1 || option == 2 || option == 3) printResultsToFile(pattern, &op);
+        totOp += op;
         op = 0;
+
+        counter++;
+        if (counter == 30)
+        {
+            if (option == 1) printHeaderToFile("Brute-Force matching (AVERAGE)");
+            else if (option == 2) printHeaderToFile("Horspool matching (AVERAGE)"); 
+            else printHeaderToFile("Boyer-Moore matching (AVERAGE)"); 
+            printResultsToFile(pattern, avrOp);
+        }
         free(text);
         free(pattern);
     }
@@ -63,11 +72,8 @@ static void displayMainMenu()
     printf("Your choice? : ");
 }
 
-static void userInput(unsigned int *option, char *text, char *pattern)
+static void getTextAndPattern(char *text, char *pattern)
 {   
-    fflush(stdin);
-    scanf("%d", option);
-    if (*option == 4) return;
     fflush(stdin);
     puts("Please enter a text here:");
     fgets(text, TEXTLEN, stdin);

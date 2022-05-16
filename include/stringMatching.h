@@ -12,18 +12,11 @@
 // matching substring or −1 if the search is unsuccessful
 int bruteForceMatching(char *pattern, char *text, size_t *op);
 
-// Implements Horspool’s algorithm for string matching
+// Implements Boyer-Moore and Horspool’s algorithm for string matching.
 // Input: Pattern P[0..m − 1], text T [0..n − 1],
-// an alphabet (ascii) of possible characters and
-// a variable (op) that counts number of critical operations preformed.
-// Output: The index of the left end of the first matching substring
-// or −1 if there are no matches
-// int horspoolsMatching(char *pattern, char *text, char *ascii, size_t *op);
-
-// Implements Horspool’s algorithm for string matching
-// Input: Pattern P[0..m − 1], text T [0..n − 1]
-// an alphabet (ascii) of possible characters and
-// a variable (op) that counts number of critical operations preformed.
+// an alphabet (ascii) of possible characters,
+// a variable (op) that counts number of critical operations preformed
+// and an option variable to determine BoyerMoore or Horspool algorithm.
 // Output: The index of the left end of the first matching substring
 // or −1 if there are no matches
 int bMHorspoolMatching(char *pattern, char *text, char *ascii, unsigned int option, size_t *op);

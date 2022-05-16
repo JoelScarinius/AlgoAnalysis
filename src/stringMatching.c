@@ -3,12 +3,15 @@
 #include <string.h>
 #include "stringMatching.h"
 
-// static void printTextandPattern(char *text, char *pattern, int i, int n, int m);
 // Fills the shift table used by Horspool’s and Boyer-Moore algorithms
 // Input: Pattern P[0..m − 1] and an alphabet of possible characters
 // Output: Table[0..size − 1] indexed by the alphabet’s characters and
 // filled with shift sizes computed by formula (7.1)
 static char *shiftTable(char *pattern, char *alphabet, int m, int n);
+// Fills the suffix used by Boyer-Moore algorithm
+// Input: Pattern P[0..m − 1] and an alphabet of possible characters
+// Output: Table[0..size − 1] indexed by the alphabet’s characters and
+// filled with shift sizes computed by formula (7.1)
 static int *suffix(char *pattern, unsigned int m);
 static char *getSubstring(char *pattern, unsigned int i, unsigned int j);
 static int getMatchingIdx(char *suffix, char *pattern, unsigned int k, unsigned int m);
@@ -47,25 +50,11 @@ int bMHorspoolMatching(char *pattern, char *text, char *ascii, unsigned int opti
         else 
         {
             printf("\nd1: %d", (option == 3) ? badTable[(int)text[i-k]]-k : badTable[(int)text[i]]);
-            // printTextandPattern(text, pattern, i, n, m);
-            int x = badTable[(int)text[i-k]]-k;
-            int y = goodTable[k];
             if (option == 3)
             {
                 printf("\td2: %d", goodTable[k]);
-                if (badTable[(int)text[i-k]]-k > 0 || goodTable[k] > 0)
-                {
-                    if (goodTable[k] > (badTable[(int)text[i-k]]-k))
-                    {
-                        i += goodTable[k];
-                    }
-                    else
-                    {
-                        i += (badTable[(int)text[i-k]]-k);
-                    }
-                    // i += ((badTable[(int)text[i-k]]-k) > (goodTable[k])) ? (badTable[(int)text[i-k]]-k) : goodTable[k];
-                }
-                else i += 1;
+                i += ((int)(badTable[(int)text[i-k]]-k) > (int)(goodTable[k])) 
+                ? (int)(badTable[(int)text[i-k]]-k) : (int)goodTable[k];
             }
             else i += badTable[(int)text[i]];
         }
@@ -123,29 +112,3 @@ static int getMatchingIdx(char* suffix, char* pattern, unsigned int k, unsigned 
         if(strncmp(temp, suffix, k)==0) idx = temp-pattern;
     return idx;
 }
-
-// static void printTextandPattern(char *text, char *pattern, int i, int n, int m)
-// {
-//     printf("\n%s\n", text);
-//     if (i == m-1) 
-//     {
-//         printf("%s\n", pattern);
-//         printf("\n%s\n", text);
-//         printf(" ");
-//     }
-//     if (i+m >= n)
-//     {
-//         for (unsigned k = 0; k < n-m; k++)
-//         {
-//             printf(" ");
-//         }
-//     }
-//     else
-//     {
-//         for (unsigned int j = 0; j < i; j++)
-//         {
-//             printf(" ");
-//         }
-//     }
-//     printf("%s\n", pattern);
-// }
