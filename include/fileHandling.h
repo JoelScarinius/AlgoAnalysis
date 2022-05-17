@@ -3,14 +3,17 @@
 
 #include <stdlib.h>
 
-#define TEXTLEN 5000
+#define TEXTLEN 4100
+#define PATLEN 20
 
+// Prints a header to a text file.
 // Input: Algorithm name
-// Output: Prints a header to a text file. 
+// Output: void
 void printHeaderToFile(char *algorithm);
 
+// Prints results to a text file.
 // Input: Pattern to search for and a variable that the determines number of operations.
-// Output: Prints results to a text file.
-void printResultsToFile(char *pattern, size_t *op);
+// Output: void 
+void printResultsToFile(char *pattern, size_t op);
 
 #endif

@@ -4,12 +4,18 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Displays the main menu in the terminal
+// Input: void
+// Output: static void
 static void displayMainMenu();
+// Prompts the user to input a text and a pattern to search for in the text.
+// Input: Two char pointers one representing the text the other the pattern.
+// Output: static void
 static void getTextAndPattern(char *text, char *pattern);
 
 int main(int argc, char const *argv[])
 {
-    size_t op = 0, totOp = 0, *avrOp = 0;;
+    size_t op = 0, totOp = 0, avrOp = 0;;
     unsigned int option = 0, counter = 0;
     int lMatchingIdx;
 
@@ -17,7 +23,7 @@ int main(int argc, char const *argv[])
     {
         char ascii[ASCII];
         char *text = (char *)malloc(sizeof(char)*TEXTLEN);
-        char *pattern = (char *)malloc(sizeof(char)*TEXTLEN);
+        char *pattern = (char *)malloc(sizeof(char)*PATLEN);
 
         displayMainMenu(); // Prints main menu.
         fflush(stdin);
@@ -29,22 +35,22 @@ int main(int argc, char const *argv[])
         case 1: 
                 printHeaderToFile("Brute-Force matching"); 
                 lMatchingIdx = bruteForceMatching(pattern, text, &op); 
-                printf("\n%d", lMatchingIdx); 
+                printf("\n%d\n", lMatchingIdx); 
                 break;
         case 2: 
                 printHeaderToFile("Horspool matching"); 
                 lMatchingIdx = bMHorspoolMatching(pattern, text, ascii, option, &op); 
-                printf("\n%d", lMatchingIdx); 
+                printf("\n%d\n", lMatchingIdx); 
                 break;
         case 3: 
                 printHeaderToFile("Boyer-Moore matching"); 
                 lMatchingIdx = bMHorspoolMatching(pattern, text, ascii, option, &op); 
-                printf("\n%d", lMatchingIdx); 
+                printf("\n%d\n", lMatchingIdx); 
                 break;
         case 4: exit(-1); break;
         default: puts("Invalid input, please try again!"); break;
         }
-        if (option == 1 || option == 2 || option == 3) printResultsToFile(pattern, &op);
+        if (option == 1 || option == 2 || option == 3) printResultsToFile(pattern, op);
         totOp += op;
         op = 0;
 
@@ -54,11 +60,16 @@ int main(int argc, char const *argv[])
             if (option == 1) printHeaderToFile("Brute-Force matching (AVERAGE)");
             else if (option == 2) printHeaderToFile("Horspool matching (AVERAGE)"); 
             else printHeaderToFile("Boyer-Moore matching (AVERAGE)"); 
-            printResultsToFile(pattern, avrOp);
+            avrOp = totOp/30;
+            printResultsToFile("AVERAGE", avrOp);
+            totOp = 0;
+            counter = 0;
         }
         free(text);
         free(pattern);
     }
+    fflush(stdin);
+    getchar();
     return 0;
 }
 

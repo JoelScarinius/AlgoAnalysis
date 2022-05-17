@@ -9,12 +9,21 @@
 // filled with shift sizes computed by formula (7.1)
 static char *shiftTable(char *pattern, char *alphabet, int m, int n);
 // Fills the suffix used by Boyer-Moore algorithm
-// Input: Pattern P[0..m − 1] and an alphabet of possible characters
-// Output: Table[0..size − 1] indexed by the alphabet’s characters and
-// filled with shift sizes computed by formula (7.1)
+// Input: Pattern P[0..m − 1] and the length of the pattern
+// Output: goodTable[0..m − 1] filled with m number of shifts depended on number of matches.
 static int *suffix(char *pattern, unsigned int m);
-static char *getSubstring(char *pattern, unsigned int i, unsigned int j);
-static int getMatchingIdx(char *suffix, char *pattern, unsigned int k, unsigned int m);
+// This is a helper function to the suffix function that collects the substring that is
+// needed for searching for dublicates of this substring in the pattern.
+// Input: Pattern P[0..m − 1] and two index variables represented as unsigned ints.
+// One is the length of the pattern and the other is the length of the pattern minus the number of matches.
+// Output: A substring represented as a char pointer.
+static char *getSubstring(char *pattern, unsigned int i, unsigned int m);
+// This is a helper function to the suffix function that finds out at which index
+// from the right you can find a duplicate of the matched substring. 
+// Input: Pattern [0..m − 1],  substring [0..m − 2] and two index variables represented as unsigned ints.
+// One is the length of the pattern and the other is the number of matches. 
+// Output: An index of the right most occurence of a matching substring.
+static int getMatchingIdx(char *subString, char *pattern, unsigned int k, unsigned int m);
 
 int bruteForceMatching(char *pattern, char *text, size_t *op)
 {
@@ -22,9 +31,12 @@ int bruteForceMatching(char *pattern, char *text, size_t *op)
     for (int i = 0; i <= n-m; i++)
     {
         unsigned int j = 0;
-        while (j < m && pattern[j] == text[i+j]) 
+        (*op)++;
+        while (j < m && pattern[j] == text[i+j]) // Critical operation that I want to count.
+        {
             j++;
             (*op)++;
+        }
         if (j == m) return i;
     }
     return -1;
@@ -32,31 +44,33 @@ int bruteForceMatching(char *pattern, char *text, size_t *op)
 
 int bMHorspoolMatching(char *pattern, char *text, char *ascii, unsigned int option, size_t *op)
 {   
-    int m = strlen(pattern), i = m-1;
+    int m = strlen(pattern), i = m-1; // i keeps track of which characters that are supposed to be compared.
     unsigned int n = strlen(text), *goodTable;
-    char *badTable = shiftTable(pattern, ascii, m, n);
-    if (option == 3) goodTable = suffix(pattern, m);
+    char *badTable = shiftTable(pattern, ascii, m, n); // Used in both Horspool and Boyer-Moore
+    if (option == 3) goodTable = suffix(pattern, m); // Used only in Boyer-Moore
 
     while (i <= n-1)
     {
-        unsigned int k = 0;
+        unsigned int k = 0; // Variable that counts number of matches.
         (*op)++;
-        while (k <= m-1 && pattern[m-1-k] == text[i-k]) 
+        // Loops until a mismatch occur or every character in the pattern is matched.
+        while (k <= m-1 && pattern[m-1-k] == text[i-k]) // Critical operation that I want to count.
         {
             k++;
             (*op)++;
         }    
-        if (k == m) return i-m+1;
+        if (k == m) return i-m+1; // If a matching substring is found, return index where substring is found. 
         else 
         {
-            printf("\nd1: %d", (option == 3) ? badTable[(int)text[i-k]]-k : badTable[(int)text[i]]);
-            if (option == 3)
+            // printf("\nd1: %d", (option == 3) ? badTable[(int)text[i-k]]-k : badTable[(int)text[i]]);
+            if (option == 3) // Only Boyer-Moore uses this part.
             {
-                printf("\td2: %d", goodTable[k]);
+                // printf("\td2: %d", goodTable[k]);
+                // The maximum value generated from the 2 tables decides how many steps can be shifted.
                 i += ((int)(badTable[(int)text[i-k]]-k) > (int)(goodTable[k])) 
                 ? (int)(badTable[(int)text[i-k]]-k) : (int)goodTable[k];
             }
-            else i += badTable[(int)text[i]];
+            else i += badTable[(int)text[i]]; // Only Horspool uses this part.
         }
     }
     free(goodTable);
@@ -65,50 +79,44 @@ int bMHorspoolMatching(char *pattern, char *text, char *ascii, unsigned int opti
 
 static char *shiftTable(char *pattern, char *ascii, int m, int n)
 {
-    for (unsigned int i = 0; i <= ASCII; i++) 
+    for (unsigned int i = 0; i <= ASCII; i++) // Fills the shiftTable with max steps possible to shift.
         ascii[i] = m;
-    for (unsigned int j = 0; j <= m-2 && m-1 > 0; j++) 
+    for (unsigned int j = 0; j <= m-2 && m-1 > 0; j++) // Gives certain shift steps to the characters in the pattern.
         ascii[(int)pattern[j]] = m-1-j;
     return ascii;
 }
 
+static int *suffix(char* pattern, unsigned int m)
+{
+    int *goodTable = (int *)calloc(m,sizeof(int)); // Allocates memory for the good suffix table.
+    unsigned int k = 1; // Variable that controls number of matches.
+
+    while(k < m) // Loops until all different number of matches is handled
+    {
+        char* subString = getSubstring(pattern, (m-k), m); // Returns Substring used to find duplicates in pattern.
+        int idx = getMatchingIdx(subString, pattern, k, m); // Idx of the rightmost first occurence of substring.
+        free(subString); // Free memory allocated for substring because it is no longer used.
+        if(idx != -1) // If a rightmost ocurrence of the substring is found.
+            goodTable[k] = (m-k) - idx;
+        else goodTable[k] = m-1; // If no occurence of the substring was found.
+        k++;
+    }
+    return goodTable;
+}
+
 static char *getSubstring(char* pattern, unsigned int i, unsigned int m)
 {
-    char* substring = calloc((m-i)+1, sizeof(char));
+    char* substring = calloc((m-i)+1, sizeof(char)); // Allocates memory for the substring and initializes it.
     for(unsigned int k = i; k < m; k++)
-        substring[k-i] = pattern[k]; 
+        substring[k-i] = pattern[k]; // Creates the substring depended on number of matches.
     return substring;
 }
 
-static int *suffix(char* pattern, unsigned int m)
+static int getMatchingIdx(char* subString, char* pattern, unsigned int k, unsigned int m)
 {
-    int *goodSuffixTable = (int *)calloc(m,sizeof(int));
-    unsigned int k = 1;
-
-    while(k < m)
-    {
-        //create the suffix
-        char* suffix = getSubstring(pattern, (m-k), m);
-        //get its rightmost ocurrence to its left in pattern
-        int idx = getMatchingIdx(suffix, pattern, k, m);
-        free(suffix);
-        //if you found the rightmost ocurrence of the suffix
-        if(idx != -1)
-            goodSuffixTable[k] = (m-k) - idx;
-        //if you did not find the rightmost occurrence of the suffix
-        else goodSuffixTable[k] = m-1;
-        k++;
-    }
-    return goodSuffixTable;
-}
-
-static int getMatchingIdx(char* suffix, char* pattern, unsigned int k, unsigned int m)
-{
-    //idx of rightmost occurrence
     int idx = -1;
-    //set temp = pattern
-    for(char* temp = pattern; temp < pattern + (m-k); temp++)
-        //if temp contains suffix then
-        if(strncmp(temp, suffix, k)==0) idx = temp-pattern;
+    // Compares pattern with substring and if they match assign idx with index of rightmost occurence.
+    for(char* temp = pattern; temp < pattern + (m-k); temp++) 
+        if(strncmp(temp, subString, k)==0) idx = temp-pattern;
     return idx;
 }
