@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define NUMOFEXE 30
+
 // Displays the main menu in the terminal
 // Input: void
 // Output: static void
@@ -16,8 +18,8 @@ static void getTextAndPattern(char *text, char *pattern);
 int main(int argc, char const *argv[])
 {
     size_t op = 0, totOp = 0, avrOp = 0;;
-    unsigned int option = 0, counter = 0;
-    int lMatchingIdx;
+    unsigned int option = 0, numOfRuns = 0;
+    int lMatchingIdx = 0;
 
     while (option != 4)
     {
@@ -33,17 +35,17 @@ int main(int argc, char const *argv[])
         switch (option)
         {
         case 1: 
-                printHeaderToFile("Brute-Force matching"); 
+                if (numOfRuns == 0) printHeaderToFile("Brute-Force matching"); 
                 lMatchingIdx = bruteForceMatching(pattern, text, &op); 
                 printf("\n%d\n", lMatchingIdx); 
                 break;
         case 2: 
-                printHeaderToFile("Horspool matching"); 
+                if (numOfRuns == 0) printHeaderToFile("Horspool matching"); 
                 lMatchingIdx = bMHorspoolMatching(pattern, text, ascii, option, &op); 
                 printf("\n%d\n", lMatchingIdx); 
                 break;
         case 3: 
-                printHeaderToFile("Boyer-Moore matching"); 
+                if (numOfRuns == 0) printHeaderToFile("Boyer-Moore matching"); 
                 lMatchingIdx = bMHorspoolMatching(pattern, text, ascii, option, &op); 
                 printf("\n%d\n", lMatchingIdx); 
                 break;
@@ -54,16 +56,16 @@ int main(int argc, char const *argv[])
         totOp += op;
         op = 0;
 
-        counter++;
-        if (counter == 30)
+        numOfRuns++;
+        if (numOfRuns == NUMOFEXE)
         {
             if (option == 1) printHeaderToFile("Brute-Force matching (AVERAGE)");
             else if (option == 2) printHeaderToFile("Horspool matching (AVERAGE)"); 
             else printHeaderToFile("Boyer-Moore matching (AVERAGE)"); 
-            avrOp = totOp/30;
+            avrOp = (totOp/NUMOFEXE); 
             printResultsToFile("AVERAGE", avrOp);
             totOp = 0;
-            counter = 0;
+            numOfRuns = 0;
         }
         free(text);
         free(pattern);

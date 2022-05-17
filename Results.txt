@@ -119,4 +119,4 @@ Algorithm: Boyer-Moore matching (AVERAGE)
 Input size: 4094
 pattern number of op
 --------------------
-AVERAGE 458
+AVERAGE 457
