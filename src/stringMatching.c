@@ -70,8 +70,8 @@ int bMHorspoolMatching(char *pattern, char *text, char *ascii, unsigned int opti
                 // The maximum value generated from the 2 tables decides how many steps can be shifted.
                 else
                 {
-                    i += ((int)(badTable[(int)text[i-k]]-k) > ((k > 0) ? (int)goodTable[k-1] : (int)goodTable[k])) 
-                    ? (int)(badTable[(int)text[i-k]]-k) : (k > 0) ? (int)goodTable[k-1] : (int)goodTable[k];
+                    i += ((int)(badTable[(int)text[i-k]]-k) > ((int)goodTable[k-1])) 
+                    ? (int)(badTable[(int)text[i-k]]-k) : (int)goodTable[k-1];
                 }
             }
             else i += badTable[(int)text[i]]; // Only Horspool uses this part.
