@@ -84,39 +84,39 @@ Algorithm: Boyer-Moore matching
 Input size: 4094
 pattern number of op
 --------------------
-coherent 695
-approach 209
-graphs 243
+coherent 707
+approach 201
+graphs 245
 - 46
-me 216
-seek 594
-. This 430
-solving 471
+me 202
+seek 593
+. This 433
+solving 482
 19 1315
 trestres 648
 few) 1039
-traditional tax 439
-ruleto 837
+traditional tax 447
+ruleto 827
 type. 253
-More 81
-and 24
+More 75
+and 22
 a 18
-The 254
-limiTatTion 531
-on 31
-a r 1582
-line. 584
-point 535
+The 238
+limiTatTion 532
+on 30
+a r 1564
+line. 581
+point 538
 8 110
-emp 521
-Loss 1152
+emp 520
+Loss 1155
 lass 307
 all 54
-sort 368
-ent 150
+sort 361
+ent 147
 
 Algorithm: Boyer-Moore matching (AVERAGE)
 Input size: 4094
 pattern number of op
 --------------------
-AVERAGE 457
+AVERAGE 450
