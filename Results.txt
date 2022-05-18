@@ -78,7 +78,7 @@ Algorithm: Horspool matching (AVERAGE)
 Input size: 4094
 pattern number of op
 --------------------
-AVERAGE 514
+AVERAGE 458
 
 Algorithm: Boyer-Moore matching
 Input size: 4094
@@ -120,3 +120,21 @@ Input size: 4094
 pattern number of op
 --------------------
 AVERAGE 450
+
+Algorithm: Brute-Force matching (WORST)
+Input size: 4094
+pattern number of op
+--------------------
+aab 12277
+
+Algorithm: Horspool matching (WORST)
+Input size: 4094
+pattern number of op
+--------------------
+baa 12272
+
+Algorithm: Boyer-Moore matching (WORST)
+Input size: 4094
+pattern number of op
+--------------------
+baa 4094

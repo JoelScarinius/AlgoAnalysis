@@ -48,7 +48,12 @@ int bMHorspoolMatching(char *pattern, char *text, char *ascii, unsigned int opti
     unsigned int n = strlen(text), *goodTable;
     char *badTable = shiftTable(pattern, ascii, m, n); // Used in both Horspool and Boyer-Moore
     if (option == 3) goodTable = suffix(pattern, m); // Used only in Boyer-Moore
-
+    printf("\n");
+    for (size_t u = 0; u < m-1; u++)
+    {
+        printf("%d ", goodTable[u]);
+    }
+    
     while (i <= n-1)
     {
         int k = 0; // Variable that counts number of matches.
@@ -92,7 +97,7 @@ static char *shiftTable(char *pattern, char *ascii, int m, int n)
 
 static int *suffix(char *pattern, unsigned int m)
 {
-    int *goodTable = (int *)calloc(m,sizeof(int)); // Allocates memory for the good suffix table.
+    int *goodTable = (int *)calloc(m-1,sizeof(int)); // Allocates memory for the good suffix table.
     unsigned int k = 1; // Variable that controls number of matches.
 
     while (k < m) // Loops until all different number of matches is handled
