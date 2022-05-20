@@ -18,7 +18,7 @@ void printResultsToFile(char *pattern, size_t op, int lMatchingIdx)
 {
     FILE *fPtr = fopen("Results.txt", "a"); // Opens the file in append mode.
 
-    fprintf(fPtr, "%s %u\n", pattern, op, lMatchingIdx);
+    fprintf(fPtr, "%s %u %d\n", pattern, op, lMatchingIdx);
 
     fclose(fPtr); // When done printing to the file the connection to the file is closed.
 }

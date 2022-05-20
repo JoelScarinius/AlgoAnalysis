@@ -47,13 +47,12 @@ int bMHorspoolMatching(char *pattern, char *text, char *ascii, unsigned int opti
     int m = strlen(pattern), i = m-1; // i keeps track of which characters that are supposed to be compared.
     unsigned int n = strlen(text), *goodTable;
     char *badTable = shiftTable(pattern, ascii, m, n); // Used in both Horspool and Boyer-Moore
-    if (option == 3) goodTable = suffix(pattern, m); // Used only in Boyer-Moore
-    printf("\n");
-    for (size_t u = 0; u < m-1; u++)
+    if (option == 3) 
     {
-        printf("%d ", goodTable[u]);
+        goodTable = suffix(pattern, m); // Used only in Boyer-Moore
+        printf("\n");
+        for (size_t u = 0; u < m-1; u++) printf("%d ", goodTable[u]); // This for prints the goodTable.
     }
-    
     while (i <= n-1)
     {
         int k = 0; // Variable that counts number of matches.
@@ -67,10 +66,10 @@ int bMHorspoolMatching(char *pattern, char *text, char *ascii, unsigned int opti
         if (k == m) return i-m+1; // If a matching substring is found, return index where substring is found. 
         else 
         {
-            // printf("\nd1: %d", (option == 3) ? badTable[(int)text[i-k]]-k : badTable[(int)text[i]]);
+            // printf("\nd1: %d", (option == 3) ? badTable[(int)text[i-k]]-k : badTable[(int)text[i]]); // This is for printing d1
             if (option == 3) // Only Boyer-Moore uses this part.
             {
-                // printf("\td2: %d", (k > 0) ? goodTable[k-1] : goodTable[k]);
+                // printf("\td2: %d", (k > 0) ? goodTable[k-1] : goodTable[k]); // This is for printing d2
                 if (k == 0) i += (int)(badTable[(int)text[i-k]]-k);
                 // The maximum value generated from the 2 tables decides how many steps can be shifted.
                 else
@@ -128,11 +127,14 @@ static int getMatchingIdx(char *subString, char *pattern, unsigned int k, unsign
     int idx = -1;
     char *temp = pattern;
     // Compares pattern with substring and if match is found assign idx with index of rightmost occurence.
-    for (; temp < pattern + (m-k); temp++)
+    while (temp < pattern + (m-k))
+    {
         if (strncmp(temp, subString, k)==0) idx = temp-pattern;
-
+        temp++;
+    }
     temp = pattern; // Resets temp to pattern.
     unsigned int i = k, j = 0;
+
     while (temp <= pattern + (m-1) && i > 0)
     {
         // Compares pattern with all substrings of the substring to look for duplicates of the different substrings.

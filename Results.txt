@@ -1,37 +1,37 @@
 Algorithm: Brute-Force matching
 Input size: 4094
-pattern number of op
+pattern, number of op, found index 
 --------------------
-coherent 4267
-approach 1362
-graphs 1264
-- 46
-me 373
-seek 2267
-. This 2060
-solving 2712
-19 2626
-trestres 4118
-few) 4006
-traditional tax 4272
-ruleto 4114
-type. 1226
-More 233
-and 51
-a 18
-The 625
-limiTatTion 4236
-on 57
-a r 4263
-line. 2576
-point 2170
-8 110
-emp 1567
-loss 3204
-lass 1142
-all 155
-sort 1265
-ent 407
+coherent 4267 4080
+approach 1362 1264
+graphs 1264 1223
+- 46 44
+me 373 365
+seek 2267 2113
+. This 2060 2015
+solving 2712 2562
+19 2626 2623
+trestres 4118 3828
+few) 4006 3912
+traditional tax 4272 3926
+ruleto 4114 3898
+type. 1226 1139
+More 233 228
+and 51 45
+a 18 16
+The 625 621
+limiTatTion 4236 -1
+on 57 50
+a r 4263 3967
+line. 2576 2482
+point 2170 2113
+8 110 108
+emp 1567 1426
+loss 3204 -1
+lass 1142 1095
+all 155 144
+sort 1265 1204
+ent 407 366
 
 Algorithm: Brute-Force matching (AVERAGE)
 Input size: 4094
@@ -41,38 +41,38 @@ AVERAGE 1893
 
 Algorithm: Horspool matching
 Input size: 4094
-pattern number of op
+pattern, number of op, found index
 --------------------
-coherent 707
-approach 201
-graphs 245
-- 46
-me 202
-seek 593
-. This 433
-solving 482
-19 1315
-trestres 645
-few) 1039
-traditional tax 447
-ruleto 827
-type. 253
-More 75
-and 22
-a 18
-The 238
-limiTatTion 532
-on 30
-a r 1564
-line. 581
-point 538
-8 110
-emp 520
-Loss 1203
-lass 313
-all 54
-sort 361
-ent 147
+coherent 707 4080
+approach 201 1264
+graphs 245 1223
+- 46 44
+me 202 365
+seek 593 2133
+. This 433 2015
+solving 482 2562
+19 1315 2623
+trestres 645 3828
+few) 1039 3912
+traditional tax 447 3926
+ruleto 827 3898
+type. 253 1139
+More 75 228
+and 22 45
+a 18 16
+The 238 621
+limiTatTion 532 -1
+on 30 50
+a r 1564 3967
+line. 581 2482
+point 538 2113
+8 110 108
+emp 520 1426
+Loss 1203 -1
+lass 313 1095
+all 54 144
+sort 361 1204
+ent 147 366
 
 Algorithm: Horspool matching (AVERAGE)
 Input size: 4094
@@ -82,59 +82,60 @@ AVERAGE 458
 
 Algorithm: Boyer-Moore matching
 Input size: 4094
-pattern number of op
+pattern, number of op, found index
 --------------------
-coherent 707
-approach 201
-graphs 245
-- 46
-me 202
-seek 593
-. This 433
-solving 482
-19 1315
-trestres 648
-few) 1039
-traditional tax 447
-ruleto 827
-type. 253
-More 75
-and 22
-a 18
-The 238
-limiTatTion 532
-on 30
-a r 1564
-line. 581
-point 538
-8 110
-emp 520
-Loss 1155
-lass 307
-all 54
-sort 361
-ent 147
+coherent 707 4080
+approach 201 1264
+graphs 245 1223
+- 46 44
+me 202 365
+seek 593 2133
+. This 433 2015
+solving 482 2562
+19 1315 2623
+trestres 648 3828
+few) 1039 3912
+traditional tax 447 3926
+ruleto 827 3898
+type. 253 1139
+More 75 228
+and 22 45
+a 18 16
+The 238 621
+limiTatTion 532 -1
+on 30 50
+a r 1564 3967
+line. 581 2482
+point 538 2113
+8 110 108
+emp 520 1426
+Loss 1149 -1
+lass 307 1095
+all 54 144
+sort 361 1204
+ent 147 366
 
 Algorithm: Boyer-Moore matching (AVERAGE)
 Input size: 4094
-pattern number of op
+pattern, number of op
 --------------------
-AVERAGE 450
+AVERAGE 456
 
 Algorithm: Brute-Force matching (WORST)
 Input size: 4094
-pattern number of op
+pattern, number of op, found index
 --------------------
-aab 12277
+aab 12277 4091
 
 Algorithm: Horspool matching (WORST)
 Input size: 4094
-pattern number of op
+pattern, number of op, found index
 --------------------
-baa 12272
+baa 12272 4091
 
 Algorithm: Boyer-Moore matching (WORST)
 Input size: 4094
-pattern number of op
+pattern, number of op, found index
 --------------------
-baa 4094
+baa 4094 4091
+
