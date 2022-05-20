@@ -23,7 +23,7 @@ static char *getSubstring(char *pattern, unsigned int i, unsigned int m);
 // Input: Pattern [0..m − 1],  substring [0..m − 2] and two index variables represented as unsigned ints.
 // One is the length of the pattern and the other is the number of matches. 
 // Output: An index of the right most occurence of a matching substring.
-static int getMatchingIdx(char *subString, char *pattern, unsigned int k, unsigned int m);
+static int getMatchingIdx(char *subString, char *pattern, unsigned int k, unsigned int m, int *duplicateIdx);
 
 int bruteForceMatching(char *pattern, char *text, size_t *op)
 {
@@ -100,17 +100,17 @@ static int *suffix(char *pattern, unsigned int m)
     int *goodTable = (int *)calloc(m-1,sizeof(int)); // Allocates memory for the good suffix table.
     unsigned int k = 1; // Variable that controls number of matches.
 
-    while (k < m) // Loops until all different number of matches is handled
+    while (k < m) // Loops until all different number of substrings is handled correctly
     {
-        int edgeCase = -1;
+        int duplicateIdx = -1;
         char* subString = getSubstring(pattern, (m-k), m); // Returns Substring used to find duplicates in pattern.
-        int idx = getMatchingIdx(subString, pattern, k, m); // Idx of the rightmost first occurence of substring.
+        int idx = getMatchingIdx(subString, pattern, k, m, &duplicateIdx); // Idx of the rightmost first occurence of substring.
         free(subString); // Free memory allocated for substring because it is no longer used.
-        // If substring doesn't match but we have a matching character at the last and the first position in pattern.
-        if (pattern[0] == pattern[m-1] && idx == -1) goodTable[k-1] = m-1; 
-        else if (idx != -1) goodTable[k-1] = (m-k) - idx; // If a rightmost ocurrence of the substring is found.
-        else if (idx == -1 && k > 1) goodTable[k-1] = goodTable[k-2]; // If a rightmost occurrence of the substring wasn't found.
-        else goodTable[k-1] = m; // If no occurence of the substring was found.
+        // If a rightmost ocurrence of the substring is found or we have duplictes of the substring that makes it possible to preform a longer shift.
+        if (idx != -1) goodTable[k-1] = (duplicateIdx >= idx || k == 1) ? (m-k) - idx : m-1-duplicateIdx; 
+        // If a rightmost occurrence of the substring wasn't found but a substring was found in an earlier iteration.
+        else if (idx == -1 && duplicateIdx != -1) goodTable[k-1] = m-1-duplicateIdx; 
+        else goodTable[k-1] = m; // If no occurence of the substring was found in first iteration.
         k++;
     }
     return goodTable;
@@ -123,11 +123,34 @@ static char *getSubstring(char *pattern, unsigned int i, unsigned int m)
     return substring;
 }
 
-static int getMatchingIdx(char *subString, char *pattern, unsigned int k, unsigned int m)
+static int getMatchingIdx(char *subString, char *pattern, unsigned int k, unsigned int m, int *duplicateIdx)
 {
     int idx = -1;
+    char *temp = pattern;
     // Compares pattern with substring and if match is found assign idx with index of rightmost occurence.
-    for (char *temp = pattern; temp < pattern + (m-k); temp++)
+    for (; temp < pattern + (m-k); temp++)
         if (strncmp(temp, subString, k)==0) idx = temp-pattern;
+
+    temp = pattern; // Resets temp to pattern.
+    unsigned int i = k, j = 0;
+    while (temp <= pattern + (m-1) && i > 0)
+    {
+        // Compares pattern with all substrings of the substring to look for duplicates of the different substrings.
+        if (strncmp(temp, subString + j, i)==0 && temp-pattern < m-k)
+        {
+            // Assign leftmost index of found duplicate substring if a longer shift is possible, determined by restraints.
+            if (temp-pattern < *duplicateIdx || *duplicateIdx == -1) *duplicateIdx = temp-pattern; 
+            // Secures that the correct index is assigned depended on number of matches at this certain iteration.
+            if (k > 1) *duplicateIdx += i-1; 
+            temp += (m-i-1); // Makes the loop to jump to next iteration. 
+        }
+        temp++;
+        if (temp >= pattern + (m-1)) // Changes vaules to be correct for next iteration.
+        {
+            i--;
+            j++;
+            temp = pattern; // Resets temp to pattern.
+        }
+    }
     return idx;
 }

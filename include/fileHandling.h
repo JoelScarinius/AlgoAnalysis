@@ -14,6 +14,6 @@ void printHeaderToFile(char *algorithm);
 // Prints results to a text file.
 // Input: Pattern to search for and a variable that the determines number of operations.
 // Output: void 
-void printResultsToFile(char *pattern, size_t op);
+void printResultsToFile(char *pattern, size_t op, int lMatchingIdx);
 
 #endif

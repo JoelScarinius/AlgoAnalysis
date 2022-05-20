@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define NUMOFEXE 30
+#define MAXNUMOFRUNS 30
 
 // Displays the main menu in the terminal
 // Input: void
@@ -52,18 +52,18 @@ int main(int argc, char const *argv[])
         case 4: exit(-1); break;
         default: puts("Invalid input, please try again!"); break;
         }
-        if (option == 1 || option == 2 || option == 3) printResultsToFile(pattern, op);
+        if (option == 1 || option == 2 || option == 3) printResultsToFile(pattern, op, lMatchingIdx);
         totOp += op;
         op = 0;
 
         numOfRuns++;
-        if (numOfRuns == NUMOFEXE)
+        if (numOfRuns == MAXNUMOFRUNS)
         {
             if (option == 1) printHeaderToFile("Brute-Force matching (AVERAGE)");
             else if (option == 2) printHeaderToFile("Horspool matching (AVERAGE)"); 
             else printHeaderToFile("Boyer-Moore matching (AVERAGE)"); 
-            avrOp = (totOp/NUMOFEXE); 
-            printResultsToFile("AVERAGE", avrOp);
+            avrOp = (totOp/MAXNUMOFRUNS); 
+            printResultsToFile("AVERAGE", avrOp, lMatchingIdx);
             totOp = 0;
             numOfRuns = 0;
         }
