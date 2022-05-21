@@ -35,9 +35,9 @@ ent 407 366
 
 Algorithm: Brute-Force matching (AVERAGE)
 Input size: 4094
-pattern number of op
+pattern, number of op, found index
 --------------------
-AVERAGE 1893
+AVERAGE 1893 1835
 
 Algorithm: Horspool matching
 Input size: 4094
@@ -76,9 +76,9 @@ ent 147 366
 
 Algorithm: Horspool matching (AVERAGE)
 Input size: 4094
-pattern number of op
+pattern number of op, found index
 --------------------
-AVERAGE 458
+AVERAGE 458 1835
 
 Algorithm: Boyer-Moore matching
 Input size: 4094
@@ -117,9 +117,9 @@ ent 147 366
 
 Algorithm: Boyer-Moore matching (AVERAGE)
 Input size: 4094
-pattern, number of op
+pattern, number of op, found index
 --------------------
-AVERAGE 456
+AVERAGE 456 1835
 
 Algorithm: Brute-Force matching (WORST)
 Input size: 4094
@@ -138,4 +138,3 @@ Input size: 4094
 pattern, number of op, found index
 --------------------
 baa 4094 4091
-

@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-#define TEXTLEN 4100
+#define TEXTLEN 4094
 #define PATLEN 20
 
 // Prints a header to a text file.

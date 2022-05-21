@@ -8,7 +8,7 @@ void printHeaderToFile(char *algorithm)
 
     fprintf(fPtr, "\n");
     fprintf(fPtr, "%s %s\n", "Algorithm:", algorithm);
-    fprintf(fPtr, "%s %d\n", "Input size:", TEXTLEN-6);
+    fprintf(fPtr, "%s %d\n", "Input size:", TEXTLEN);
     fprintf(fPtr, "%s\n%s\n", "pattern, number of op, found index", "--------------------");
 
     fclose(fPtr); // When done printing to the file the connection to the file is closed.

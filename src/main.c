@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAXNUMOFRUNS 30
+#define MAXNUMRUNS 30
 
 // Displays the main menu in the terminal
 // Input: void
@@ -17,8 +17,8 @@ static void getTextAndPattern(char *text, char *pattern);
 
 int main(int argc, char const *argv[])
 {
-    size_t op = 0, totOp = 0, avrOp = 0;;
-    unsigned int option = 0, numOfRuns = 0;
+    size_t op = 0, totOp = 0, avrOp = 0, totIdx = 0, avrIdx = 0;
+    unsigned int option = 0, numRuns = 0;
     int lMatchingIdx = 0;
 
     while (option != 4)
@@ -35,17 +35,17 @@ int main(int argc, char const *argv[])
         switch (option)
         {
         case 1: 
-                if (numOfRuns == 0) printHeaderToFile("Brute-Force matching"); 
+                if (numRuns == 0) printHeaderToFile("Brute-Force matching"); 
                 lMatchingIdx = bruteForceMatching(pattern, text, &op); 
                 printf("\n%d\n", lMatchingIdx); 
                 break;
         case 2: 
-                if (numOfRuns == 0) printHeaderToFile("Horspool matching"); 
+                if (numRuns == 0) printHeaderToFile("Horspool matching"); 
                 lMatchingIdx = bMHorspoolMatching(pattern, text, ascii, option, &op); 
                 printf("\n%d\n", lMatchingIdx); 
                 break;
         case 3: 
-                if (numOfRuns == 0) printHeaderToFile("Boyer-Moore matching"); 
+                if (numRuns == 0) printHeaderToFile("Boyer-Moore matching"); 
                 lMatchingIdx = bMHorspoolMatching(pattern, text, ascii, option, &op); 
                 printf("\n%d\n", lMatchingIdx); 
                 break;
@@ -54,18 +54,21 @@ int main(int argc, char const *argv[])
         }
         if (option == 1 || option == 2 || option == 3) printResultsToFile(pattern, op, lMatchingIdx);
         totOp += op;
+        totIdx += (lMatchingIdx != -1) ? lMatchingIdx : TEXTLEN;
         op = 0;
+        numRuns++;
 
-        numOfRuns++;
-        if (numOfRuns == MAXNUMOFRUNS)
+        if (numRuns == MAXNUMRUNS)
         {
             if (option == 1) printHeaderToFile("Brute-Force matching (AVERAGE)");
             else if (option == 2) printHeaderToFile("Horspool matching (AVERAGE)"); 
             else printHeaderToFile("Boyer-Moore matching (AVERAGE)"); 
-            avrOp = (totOp/MAXNUMOFRUNS); 
-            printResultsToFile("AVERAGE", avrOp, lMatchingIdx);
+            avrOp = (totOp/MAXNUMRUNS); 
+            avrIdx = (totIdx/MAXNUMRUNS);
+            printResultsToFile("AVERAGE", avrOp, avrIdx);
             totOp = 0;
-            numOfRuns = 0;
+            totIdx = 0;
+            numRuns = 0;
         }
         free(text);
         free(pattern);
