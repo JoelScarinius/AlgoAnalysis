@@ -24,12 +24,19 @@ static char *getSubstring(char *pattern, unsigned int i, unsigned int m);
 // One is the length of the pattern and the other is the number of matches. 
 // Output: An index of the right most occurence of a matching substring.
 static int getMatchingIdx(char *subString, char *pattern, unsigned int k, unsigned int m, int *duplicateIdx);
+// This function prints text and pattern to show the user the shifts between each iteration of the algorithm used.
+// Input: Pattern P[0..m − 1], text T [0..n − 1],
+// i determines the position in the text, n is the length of the text, m is the length of the pattern
+// and option is to determine BoyerMoore/Horspool or Brute-Force algorithm
+// Output: Prints text and pattern to the screen. 
+static void printTextandPattern(char *text, char *pattern, unsigned int i, unsigned int n, unsigned int m, unsigned int option);
 
 int bruteForceMatching(char *pattern, char *text, size_t *op)
 {
     unsigned int m = strlen(pattern), n = strlen(text);
     for (int i = 0; i <= n-m; i++)
     {
+        printTextandPattern(text, pattern, i, n, m, 1); // Prints text and pattern to screen.
         unsigned int j = 0;
         (*op)++;
         while (j < m && pattern[j] == text[i+j]) // Critical operation that I want to count.
@@ -55,6 +62,7 @@ int bMHorspoolMatching(char *pattern, char *text, char *ascii, unsigned int opti
     }
     while (i <= n-1)
     {
+        printTextandPattern(text, pattern, i, n, m, option); // Prints text and pattern to screen.
         int k = 0; // Variable that counts number of matches.
         (*op)++;
         // Loops until a mismatch occur or every character in the pattern is matched.
@@ -155,4 +163,24 @@ static int getMatchingIdx(char *subString, char *pattern, unsigned int k, unsign
         }
     }
     return idx;
+}
+
+static void printTextandPattern(char *text, char *pattern, unsigned int i, unsigned int n, unsigned int m, unsigned int option)
+{
+    if (i == 0 && option == 1) printf("\n%s\n", text);
+    else if (i == m-1 && option != 1) printf("\n%s\n", text);
+    else
+    {
+        if (option != 1)
+            for (unsigned int j = 0; j < i-(m-1); j++)
+            {
+                printf(" ");
+            }
+        else
+            for (unsigned int j = 0; j < i; j++)
+            {
+                printf(" ");
+            }
+    }
+    printf("%s\n", pattern);
 }
