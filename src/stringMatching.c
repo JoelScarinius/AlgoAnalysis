@@ -116,7 +116,7 @@ static int *suffix(char *pattern, unsigned int m)
         // If a rightmost ocurrence of the substring is found or we have duplictes of the substring that makes it possible to preform a longer shift.
         if (idx != -1) goodTable[k-1] = (duplicateIdx >= idx || k == 1) ? (m-k) - idx : m-1-duplicateIdx; 
         // If a rightmost occurrence of the substring wasn't found but a substring was found in an earlier iteration.
-        else if (idx == -1 && duplicateIdx != -1) goodTable[k-1] = m-1-duplicateIdx; 
+        else if (idx == -1 && duplicateIdx == 0) goodTable[k-1] = m-1; 
         else goodTable[k-1] = m; // If no occurence of the substring was found in first iteration.
         k++;
     }
@@ -146,13 +146,19 @@ static int getMatchingIdx(char *subString, char *pattern, unsigned int k, unsign
     while (temp <= pattern + (m-1) && i > 0)
     {
         // Compares pattern with all substrings of the substring to look for duplicates of the different substrings.
-        if (strncmp(temp, subString + j, i)==0 && temp-pattern < m-k)
+        if (strncmp(temp, subString + j, i)==0 && temp-pattern <= m-1)
         {
             // Assign leftmost index of found duplicate substring if a longer shift is possible, determined by restraints.
-            if (temp-pattern < *duplicateIdx || *duplicateIdx == -1) *duplicateIdx = temp-pattern; 
-            // Secures that the correct index is assigned depended on number of matches at this certain iteration.
-            if (k > 1) *duplicateIdx += i-1; 
-            temp += (m-i-1); // Makes the loop to jump to next iteration. 
+            if (temp-pattern < *duplicateIdx || *duplicateIdx == -1) 
+            {    
+                if (*duplicateIdx - (k-1) != 0) 
+                {
+                    *duplicateIdx = temp-pattern; 
+                    // Secures that the correct index is assigned depended on number of matches at this certain iteration.
+                    if (k > 1) *duplicateIdx += i-1; 
+                    temp += (m-i-1); // Makes the loop to jump to next iteration. 
+                }
+            }
         }
         temp++;
         if (temp >= pattern + (m-1)) // Changes vaules to be correct for next iteration.
