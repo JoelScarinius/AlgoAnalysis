@@ -62,7 +62,7 @@ int bMHorspoolMatching(char *pattern, char *text, char *ascii, unsigned int opti
     }
     while (i <= n-1)
     {
-        // printTextandPattern(text, pattern, i, n, m, option); // Prints text and pattern to screen.
+        printTextandPattern(text, pattern, i, n, m, option); // Prints text and pattern to screen.
         int k = 0; // Variable that counts number of matches.
         (*op)++;
         // Loops until a mismatch occur or every character in the pattern is matched.
